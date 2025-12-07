@@ -28,9 +28,21 @@ function renderIcon(name?: string) {
 
 export function TopicButton({ href, title, description, icon, className }: { href: string; title: string; description?: string; icon?: string; className?: string }) {
   const router = useRouter()
+  const onClick = React.useCallback(() => {
+    try {
+      const isInternal = href.startsWith("/")
+      if (isInternal) {
+        router.push(href)
+      } else if (typeof window !== "undefined") {
+        window.location.href = href
+      }
+    } catch {
+      if (typeof window !== "undefined") window.location.href = href
+    }
+  }, [href, router])
   return (
     <HoverButton
-      onClick={() => router.push(href)}
+      onClick={onClick}
       aria-label={title}
       className={cn(
         "w-full",
