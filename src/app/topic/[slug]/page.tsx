@@ -1,7 +1,6 @@
 import { SectionHeader } from "@/components/ui/section-header"
 import { TopicButton } from "@/components/ui/topic-button"
 import { BackButton } from "@/components/ui/back-button"
-import { Code2, Bot, Brain, Settings, MessageSquare, Mail, type LucideIcon } from "lucide-react"
 
 export default function TopicPage({ params }: { params: { slug: string } }) {
   const titleMap: Record<string, string> = {
@@ -11,26 +10,26 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
     "automation": "Автоматизация",
   }
 
-  const lessonsBySlug: Record<string, Array<{ key: string; title: string; description: string; icon: LucideIcon }>> = {
+  const lessonsBySlug: Record<string, Array<{ key: string; title: string; description: string; icon: string }>> = {
     "ai-coding": [
-      { key: "intro", title: "Введение", description: "Основы и первые шаги", icon: Code2 },
-      { key: "tools", title: "Инструменты", description: "IDE, плагины и модели", icon: Code2 },
-      { key: "practice", title: "Практика", description: "Задачи и упражнения", icon: Code2 },
+      { key: "intro", title: "Введение", description: "Основы и первые шаги", icon: "code" },
+      { key: "tools", title: "Инструменты", description: "IDE, плагины и модели", icon: "code" },
+      { key: "practice", title: "Практика", description: "Задачи и упражнения", icon: "code" },
     ],
     "ai-assistants": [
-      { key: "overview", title: "Обзор", description: "Виды ассистентов", icon: Bot },
-      { key: "workflows", title: "Процессы", description: "Сценарии использования", icon: Bot },
-      { key: "integrations", title: "Интеграции", description: "Инструменты и сервисы", icon: Bot },
+      { key: "overview", title: "Обзор", description: "Виды ассистентов", icon: "bot" },
+      { key: "workflows", title: "Процессы", description: "Сценарии использования", icon: "bot" },
+      { key: "integrations", title: "Интеграции", description: "Инструменты и сервисы", icon: "bot" },
     ],
     "ml-basics": [
-      { key: "regression", title: "Регрессия", description: "Линейные модели", icon: Brain },
-      { key: "classification", title: "Классификация", description: "Основные алгоритмы", icon: Brain },
-      { key: "evaluation", title: "Оценка", description: "Метрики качества", icon: Brain },
+      { key: "regression", title: "Регрессия", description: "Линейные модели", icon: "brain" },
+      { key: "classification", title: "Классификация", description: "Основные алгоритмы", icon: "brain" },
+      { key: "evaluation", title: "Оценка", description: "Метрики качества", icon: "brain" },
     ],
     "automation": [
-      { key: "scripts", title: "Скрипты", description: "Автозадачи и утилиты", icon: Settings },
-      { key: "pipelines", title: "Пайплайны", description: "Сборки и процессы", icon: Settings },
-      { key: "integrations", title: "Интеграции", description: "API и сервисы", icon: Settings },
+      { key: "scripts", title: "Скрипты", description: "Автозадачи и утилиты", icon: "settings" },
+      { key: "pipelines", title: "Пайплайны", description: "Сборки и процессы", icon: "settings" },
+      { key: "integrations", title: "Интеграции", description: "API и сервисы", icon: "settings" },
     ],
   }
 
@@ -47,14 +46,14 @@ export default function TopicPage({ params }: { params: { slug: string } }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
           {lessons.map((l) => (
-            <TopicButton key={l.key} href={`/topic/${params.slug}/${l.key}`} title={l.title} description={l.description} Icon={l.icon} />
+            <TopicButton key={l.key} href={`/topic/${params.slug}/${l.key}`} title={l.title} description={l.description} icon={l.icon} />
           ))}
         </div>
 
         <SectionHeader title="Техподдержка" className="mb-4" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          <TopicButton href={`mailto:support@example.com?subject=${encodeURIComponent(title)}`} title="Email поддержки" description="Ответ в рабочее время" Icon={Mail} />
-          <TopicButton href="https://t.me/ai_support" title="Чат поддержки" description="Быстрые ответы" Icon={MessageSquare} />
+          <TopicButton href={`mailto:support@example.com?subject=${encodeURIComponent(title)}`} title="Email поддержки" description="Ответ в рабочее время" icon="mail" />
+          <TopicButton href="https://t.me/ai_support" title="Чат поддержки" description="Быстрые ответы" icon="message" />
         </div>
       </div>
     </div>
