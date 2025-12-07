@@ -1,19 +1,61 @@
+import { SectionHeader } from "@/components/ui/section-header"
+import { TopicButton } from "@/components/ui/topic-button"
+import { BackButton } from "@/components/ui/back-button"
+import { Code2, Bot, Brain, Settings, MessageSquare, Mail, type LucideIcon } from "lucide-react"
+
 export default function TopicPage({ params }: { params: { slug: string } }) {
   const titleMap: Record<string, string> = {
     "ai-coding": "ИИ кодинг",
     "ai-assistants": "AI ассистенты",
     "ml-basics": "ML основы",
     "automation": "Автоматизация",
-    "prompting": "Prompt Engineering",
   }
+
+  const lessonsBySlug: Record<string, Array<{ key: string; title: string; description: string; icon: LucideIcon }>> = {
+    "ai-coding": [
+      { key: "intro", title: "Введение", description: "Основы и первые шаги", icon: Code2 },
+      { key: "tools", title: "Инструменты", description: "IDE, плагины и модели", icon: Code2 },
+      { key: "practice", title: "Практика", description: "Задачи и упражнения", icon: Code2 },
+    ],
+    "ai-assistants": [
+      { key: "overview", title: "Обзор", description: "Виды ассистентов", icon: Bot },
+      { key: "workflows", title: "Процессы", description: "Сценарии использования", icon: Bot },
+      { key: "integrations", title: "Интеграции", description: "Инструменты и сервисы", icon: Bot },
+    ],
+    "ml-basics": [
+      { key: "regression", title: "Регрессия", description: "Линейные модели", icon: Brain },
+      { key: "classification", title: "Классификация", description: "Основные алгоритмы", icon: Brain },
+      { key: "evaluation", title: "Оценка", description: "Метрики качества", icon: Brain },
+    ],
+    "automation": [
+      { key: "scripts", title: "Скрипты", description: "Автозадачи и утилиты", icon: Settings },
+      { key: "pipelines", title: "Пайплайны", description: "Сборки и процессы", icon: Settings },
+      { key: "integrations", title: "Интеграции", description: "API и сервисы", icon: Settings },
+    ],
+  }
+
   const title = titleMap[params.slug] ?? params.slug
+  const lessons = lessonsBySlug[params.slug] ?? []
+
   return (
-    <div className="min-h-screen w-full grid place-items-center px-4 py-10">
-      <div className="max-w-2xl w-full text-center">
-        <h1 className="text-3xl sm:text-4xl font-semibold mb-4">{title}</h1>
-        <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
-          Здесь будут уроки и подтемы для выбранной темы. Страница адаптивна и готова к наполнению.
-        </p>
+    <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-4 sm:mb-6">
+          <BackButton />
+        </div>
+        <SectionHeader title={title} subtitle="Выберите урок или откройте поддержку" className="mb-6 sm:mb-8" />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
+          {lessons.map((l) => (
+            <TopicButton key={l.key} href={`/topic/${params.slug}/${l.key}`} title={l.title} description={l.description} Icon={l.icon} />
+          ))}
+        </div>
+
+        <SectionHeader title="Техподдержка" className="mb-4" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <TopicButton href={`mailto:support@example.com?subject=${encodeURIComponent(title)}`} title="Email поддержки" description="Ответ в рабочее время" Icon={Mail} />
+          <TopicButton href="https://t.me/ai_support" title="Чат поддержки" description="Быстрые ответы" Icon={MessageSquare} />
+        </div>
       </div>
     </div>
   )
