@@ -5,7 +5,8 @@
   --foreground: #171717;
 }
 
-@theme inline {
+/* Tailwind v4 tokens defined as plain CSS variables to avoid @theme warning */
+:root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, "Noto Sans", "Liberation Sans", "Segoe UI", Roboto, sans-serif;

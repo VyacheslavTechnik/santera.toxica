@@ -25,7 +25,20 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
       const xPos = x / buttonWidth
       const color = `linear-gradient(to right, var(--circle-start) ${xPos * 100}%, var(--circle-end) ${xPos * 100}%)`
 
-      setCircles((prev) => [...prev, { id: Date.now(), x, y, color, fadeState: null }])
+      const id = Date.now()
+      setCircles((prev) => [...prev, { id, x, y, color, fadeState: null }])
+
+      setTimeout(() => {
+        setCircles((prev) => prev.map((c) => (c.id === id ? { ...c, fadeState: "in" } : c)))
+      }, 0)
+
+      setTimeout(() => {
+        setCircles((prev) => prev.map((c) => (c.id === id ? { ...c, fadeState: "out" } : c)))
+      }, 1000)
+
+      setTimeout(() => {
+        setCircles((prev) => prev.filter((c) => c.id !== id))
+      }, 2200)
     }, [])
 
     const handlePointerMove = React.useCallback(
@@ -51,23 +64,7 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
       setIsListening(false)
     }, [])
 
-    React.useEffect(() => {
-      circles.forEach((circle) => {
-        if (!circle.fadeState) {
-          setTimeout(() => {
-            setCircles((prev) => prev.map((c) => (c.id === circle.id ? { ...c, fadeState: "in" } : c)))
-          }, 0)
-
-          setTimeout(() => {
-            setCircles((prev) => prev.map((c) => (c.id === circle.id ? { ...c, fadeState: "out" } : c)))
-          }, 1000)
-
-          setTimeout(() => {
-            setCircles((prev) => prev.filter((c) => c.id !== circle.id))
-          }, 2200)
-        }
-      })
-  }, [])
+  
 
     return (
       <button
