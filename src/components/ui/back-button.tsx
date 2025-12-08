@@ -16,9 +16,11 @@ export function BackButton({ className, label = "Назад" }: { className?: st
   }, [router])
 
   return (
-    <Button variant="outline" size="sm" className={className} onClick={onClick} aria-label={label}>
-      <ArrowLeft className="mr-2 h-4 w-4" />
-      {label}
-    </Button>
+    <div className="w-full flex justify-center">
+      <Button variant="outline" size="sm" className={className} onClick={onClick} aria-label={label}>
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        {label}
+      </Button>
+    </div>
   )
 }

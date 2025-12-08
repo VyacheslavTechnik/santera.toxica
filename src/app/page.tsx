@@ -11,6 +11,7 @@ export default function Home() {
         <div className="mx-auto max-w-5xl">
           <Logo className="mb-4 sm:mb-6" />
           <SectionHeader title="Учебное пространство" subtitle="Уроки по искусственному интеллекту" className="mb-6 sm:mb-8" />
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <TopicButton href="/topic/ai-coding" title="ИИ кодинг" description="Практика кода с моделями и Copilot" icon="code" />
             <TopicButton href="/topic/ai-assistants" title="AI ассистенты" description="Инструменты и рабочие процессы ассистентов" icon="bot" />

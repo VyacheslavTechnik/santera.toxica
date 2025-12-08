@@ -48,6 +48,7 @@ export function TopicButton({ href, title, description, icon, className }: { hre
         "w-full",
         "py-4 sm:py-5",
         "rounded-2xl",
+        "border border-black/15 dark:border-white/15",
         className,
       )}
     >
