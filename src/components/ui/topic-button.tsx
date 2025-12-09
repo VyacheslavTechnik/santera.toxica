@@ -4,7 +4,7 @@ import * as React from "react"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { HoverButton } from "@/components/ui/hover-button"
-import { Code2, Bot, Brain, Settings, Mail, MessageSquare } from "lucide-react"
+import { Code2, Bot, Brain, Settings, Mail, MessageSquare, Plus, Sparkles, BarChart2 } from "lucide-react"
 
 function renderIcon(name?: string) {
   const cls = "h-5 w-5 sm:h-6 sm:w-6"
@@ -21,6 +21,12 @@ function renderIcon(name?: string) {
       return <Mail className={cls} />
     case "message":
       return <MessageSquare className={cls} />
+    case "plus":
+      return <Plus className={cls} />
+    case "sparkles":
+      return <Sparkles className={cls} />
+    case "stats":
+      return <BarChart2 className={cls} />
     default:
       return null
   }
