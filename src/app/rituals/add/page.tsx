@@ -1,12 +1,14 @@
 "use client"
 import * as React from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { SectionHeader } from "@/components/ui/section-header"
 import { Button } from "@/components/ui/button"
 
+export const dynamic = "force-dynamic"
+
 export default function AddRitualPage() {
   const router = useRouter()
-  const search = useSearchParams()
+  
   const [name, setName] = React.useState("")
   const [type, setType] = React.useState("медитация")
   const [categories, setCategories] = React.useState<string[]>(["медитация","дыхание","аффирмация","очищение","энергетика"])
@@ -26,7 +28,7 @@ export default function AddRitualPage() {
         if (names.length) setCategories(names)
       }
     } catch {}
-    const editParam = search.get("edit")
+    const editParam = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("edit") : null
     if (editParam) {
       const id = parseInt(editParam, 10)
       try {
@@ -45,7 +47,7 @@ export default function AddRitualPage() {
       }
       } catch {}
     }
-  }, [search])
+  }, [])
 
   const save = React.useCallback(() => {
     const dur = parseInt(duration || "0", 10)
@@ -74,6 +76,7 @@ export default function AddRitualPage() {
   }, [router, editId])
 
   return (
+    <React.Suspense fallback={<div className="min-h-screen w-full px-4 py-6">Загрузка…</div>}>
     <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8">
       <div className="mx-auto max-w-3xl">
         <SectionHeader title="Добавление ритуала" subtitle="Заполни детали и сохрани" className="mb-4 sm:mb-6" />
@@ -165,5 +168,6 @@ export default function AddRitualPage() {
         </div>
       </div>
     </div>
+    </React.Suspense>
   )
 }

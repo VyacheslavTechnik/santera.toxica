@@ -3,11 +3,13 @@ import * as React from "react"
 import { SectionHeader } from "@/components/ui/section-header"
 import { BackButton } from "@/components/ui/back-button"
 import { Button } from "@/components/ui/button"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
+
+export const dynamic = "force-dynamic"
 
 export default function AddDreamsPage() {
   const router = useRouter()
-  const search = useSearchParams()
+  
   const [title, setTitle] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [emotion, setEmotion] = React.useState<string>("спокойствие")
@@ -17,7 +19,7 @@ export default function AddDreamsPage() {
   const [createdAt, setCreatedAt] = React.useState<string | null>(null)
 
   React.useEffect(() => {
-    const editParam = search.get("edit")
+    const editParam = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("edit") : null
     if (editParam) {
       const id = parseInt(editParam, 10)
       try {
@@ -35,7 +37,7 @@ export default function AddDreamsPage() {
         }
       } catch {}
     }
-  }, [search])
+  }, [])
 
   const save = React.useCallback(() => {
     const entry = {
@@ -62,6 +64,7 @@ export default function AddDreamsPage() {
   }, [router])
 
   return (
+    <React.Suspense fallback={<div className="min-h-screen w-full px-4 py-6 text-white">Загрузка…</div>}>
     <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8 bg-[#0b1b3a]">
       <div className="mx-auto max-w-4xl">
         <div className="mb-4 sm:mb-6 flex items-center justify-between">
@@ -141,5 +144,6 @@ export default function AddDreamsPage() {
         </div>
       </div>
     </div>
+    </React.Suspense>
   )
 }
