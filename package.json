@@ -14,7 +14,7 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev --name init",
-    "postinstall": "prisma generate"
+    "postinstall": "cross-env DATABASE_URL=file:./dev.db prisma generate"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
@@ -36,6 +36,7 @@
     "eslint-config-next": "16.0.7",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "prisma": "^5.19.0"
+    "prisma": "^5.19.0",
+    "cross-env": "^7.0.3"
   }
 }
