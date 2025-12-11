@@ -3,5 +3,9 @@
   "framework": "nextjs",
   "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "env": {
+    "NEXT_PUBLIC_ADMIN_USER_ID": "1399542967",
+    "NEXT_PUBLIC_ADMIN_USERNAME": "alexeevich_tech"
+  }
 }
