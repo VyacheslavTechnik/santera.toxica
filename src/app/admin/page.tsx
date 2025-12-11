@@ -12,6 +12,20 @@ function useRole() {
       const u = raw ? JSON.parse(raw) : null
       setRole(u?.role || "user")
     } catch { setRole("user") }
+    try {
+      // @ts-ignore
+      const tg = window?.Telegram?.WebApp
+      const user = tg?.initDataUnsafe?.user
+      const envId = (process?.env?.NEXT_PUBLIC_ADMIN_USER_ID || "").trim()
+      const envUsername = (process?.env?.NEXT_PUBLIC_ADMIN_USERNAME || "").replace(/^@/, "").toLowerCase()
+      const matchesId = envId && String(user?.id) === String(envId)
+      const matchesName = envUsername && String(user?.username || "").toLowerCase() === envUsername
+      if (user && (matchesId || matchesName)) {
+        const cur = { id: user.id, username: user.username || "", role: "admin" }
+        try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
+        setRole("admin")
+      }
+    } catch {}
   }, [])
   return role
 }
