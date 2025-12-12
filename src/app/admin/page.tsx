@@ -23,8 +23,12 @@ function useRole() {
       const allowBySecret = grantSecret && urlSecret && grantSecret === urlSecret
       const matchesId = envId && String(user?.id) === String(envId)
       const matchesName = envUsername && String(user?.username || "").toLowerCase() === envUsername
-      if (allowBySecret || (user && (matchesId || matchesName))) {
-        const cur = { id: user.id, username: user.username || "", role: "admin" }
+      if (allowBySecret) {
+        const cur = { id: envId || "0", username: envUsername || "", role: "admin" }
+        try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
+        setRole("admin")
+      } else if (user && (matchesId || matchesName)) {
+        const cur = { id: String(user.id), username: user.username || "", role: "admin" }
         try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
         setRole("admin")
       }
