@@ -18,9 +18,12 @@ function useRole() {
       const user = tg?.initDataUnsafe?.user
       const envId = (process?.env?.NEXT_PUBLIC_ADMIN_USER_ID || "").trim()
       const envUsername = (process?.env?.NEXT_PUBLIC_ADMIN_USERNAME || "").replace(/^@/, "").toLowerCase()
+      const grantSecret = (process?.env?.NEXT_PUBLIC_ADMIN_GRANT_SECRET || "").trim()
+      const urlSecret = (new URLSearchParams(window.location.search).get('secret') || '').trim()
+      const allowBySecret = grantSecret && urlSecret && grantSecret === urlSecret
       const matchesId = envId && String(user?.id) === String(envId)
       const matchesName = envUsername && String(user?.username || "").toLowerCase() === envUsername
-      if (user && (matchesId || matchesName)) {
+      if (allowBySecret || (user && (matchesId || matchesName))) {
         const cur = { id: user.id, username: user.username || "", role: "admin" }
         try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
         setRole("admin")

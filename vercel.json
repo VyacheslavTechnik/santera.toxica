@@ -6,12 +6,14 @@
   "outputDirectory": ".next",
   "env": {
     "NEXT_PUBLIC_ADMIN_USER_ID": "1399542967",
-    "NEXT_PUBLIC_ADMIN_USERNAME": "alexeevich_tech"
+    "NEXT_PUBLIC_ADMIN_USERNAME": "alexeevich_tech",
+    "NEXT_PUBLIC_ADMIN_GRANT_SECRET": "SANTERA_ADMIN_2025"
   },
   "build": {
     "env": {
       "NEXT_PUBLIC_ADMIN_USER_ID": "1399542967",
-      "NEXT_PUBLIC_ADMIN_USERNAME": "alexeevich_tech"
+      "NEXT_PUBLIC_ADMIN_USERNAME": "alexeevich_tech",
+      "NEXT_PUBLIC_ADMIN_GRANT_SECRET": "SANTERA_ADMIN_2025"
     }
   }
 }
