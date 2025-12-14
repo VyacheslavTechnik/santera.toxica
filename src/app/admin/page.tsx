@@ -67,8 +67,8 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8 bg-gradient-to-b from-black via-indigo-950 to-black">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-4 sm:mb-6"><BackButton /></div>
-          <SectionHeader title="Доступ запрещён" subtitle="Недостаточно прав" />
+          <div className="mb-4 sm:mb-6"><BackButton className="text-white border-white/30" /></div>
+          <SectionHeader title="Доступ запрещён" subtitle="Недостаточно прав" light />
         </div>
       </div>
     )
@@ -77,18 +77,18 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8 bg-gradient-to-b from-black via-indigo-950 to-black">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-4 sm:mb-6"><BackButton /></div>
-        <SectionHeader title="Админ‑панель" subtitle="Управление приложением" className="mb-4 sm:mb-6" />
+        <div className="mb-4 sm:mb-6"><BackButton className="text-white border-white/30" /></div>
+        <SectionHeader title="Админ‑панель" subtitle="Управление приложением" className="mb-4 sm:mb-6" light />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-          <TopicButton href="/admin/users" title="👥 Пользователи" description="Список и карточки" />
-          <TopicButton href="/stats" title="📊 Статистика" description="Активность и энергия" />
-          <TopicButton href="/rituals/today" title="🧘 Ритуалы" description="Проверка практик" />
-          <TopicButton href="/admin/rituals/categories" title="🏷️ Категории ритуалов" description="Список и управление" />
-          <TopicButton href="/admin/affirmations" title="💬 Аффирмации дня" description="Список и управление" />
-          <TopicButton href="/admin/materials" title="📚 Материалы" description="Загрузка и список" />
-          <TopicButton href="/admin/broadcasts" title="📨 Рассылки" description="Отправка сообщений" />
-          <TopicButton href="/admin/roles" title="🔐 Роли и права" description="Список и управление" />
-          <TopicButton href="/admin/roles/assign" title="🧭 Назначение ролей" description="Выбор роли пользователю" />
+          <TopicButton href="/admin/users" title="👥 Пользователи" description="Список и карточки" className="text-white" />
+          <TopicButton href="/stats" title="📊 Статистика" description="Активность и энергия" className="text-white" />
+          <TopicButton href="/rituals/today" title="🧘 Ритуалы" description="Проверка практик" className="text-white" />
+          <TopicButton href="/admin/rituals/categories" title="🏷️ Категории ритуалов" description="Список и управление" className="text-white" />
+          <TopicButton href="/admin/affirmations" title="💬 Аффирмации дня" description="Список и управление" className="text-white" />
+          <TopicButton href="/admin/materials" title="📚 Материалы" description="Загрузка и список" className="text-white" />
+          <TopicButton href="/admin/broadcasts" title="📨 Рассылки" description="Отправка сообщений" className="text-white" />
+          <TopicButton href="/admin/roles" title="🔐 Роли и права" description="Список и управление" className="text-white" />
+          <TopicButton href="/admin/roles/assign" title="🧭 Назначение ролей" description="Выбор роли пользователю" className="text-white" />
         </div>
       </div>
     </div>
