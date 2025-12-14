@@ -20,10 +20,14 @@ function useRole() {
       const envUsername = (process?.env?.NEXT_PUBLIC_ADMIN_USERNAME || "").replace(/^@/, "").toLowerCase()
       const grantSecret = (process?.env?.NEXT_PUBLIC_ADMIN_GRANT_SECRET || "").trim()
       const urlSecret = (new URLSearchParams(window.location.search).get('secret') || '').trim()
+      const urlId = (new URLSearchParams(window.location.search).get('id') || '').trim()
+      const urlUsername = (new URLSearchParams(window.location.search).get('username') || '').replace(/^@/, '').toLowerCase()
       const allowBySecret = grantSecret && urlSecret && grantSecret === urlSecret
       const matchesId = envId && String(user?.id) === String(envId)
       const matchesName = envUsername && String(user?.username || "").toLowerCase() === envUsername
-      if (allowBySecret) {
+      const allowByIdQuery = envId && urlId && String(urlId) === String(envId)
+      const allowByNameQuery = envUsername && urlUsername && urlUsername === envUsername
+      if (allowBySecret || allowByIdQuery || allowByNameQuery) {
         const cur = { id: envId || "0", username: envUsername || "", role: "admin" }
         try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
         setRole("admin")
