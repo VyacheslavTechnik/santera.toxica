@@ -12,31 +12,50 @@ function useRole() {
       const u = raw ? JSON.parse(raw) : null
       setRole(u?.role || "user")
     } catch { setRole("user") }
-    try {
-      // @ts-ignore
-      const tg = window?.Telegram?.WebApp
-      const user = tg?.initDataUnsafe?.user
-      const envId = (process?.env?.NEXT_PUBLIC_ADMIN_USER_ID || "").trim()
-      const envUsername = (process?.env?.NEXT_PUBLIC_ADMIN_USERNAME || "").replace(/^@/, "").toLowerCase()
-      const grantSecret = (process?.env?.NEXT_PUBLIC_ADMIN_GRANT_SECRET || "").trim()
-      const urlSecret = (new URLSearchParams(window.location.search).get('secret') || '').trim()
-      const urlId = (new URLSearchParams(window.location.search).get('id') || '').trim()
-      const urlUsername = (new URLSearchParams(window.location.search).get('username') || '').replace(/^@/, '').toLowerCase()
-      const allowBySecret = grantSecret && urlSecret && grantSecret === urlSecret
-      const matchesId = envId && String(user?.id) === String(envId)
-      const matchesName = envUsername && String(user?.username || "").toLowerCase() === envUsername
-      const allowByIdQuery = envId && urlId && String(urlId) === String(envId)
-      const allowByNameQuery = envUsername && urlUsername && urlUsername === envUsername
-      if (allowBySecret || allowByIdQuery || allowByNameQuery) {
-        const cur = { id: envId || "0", username: envUsername || "", role: "admin" }
-        try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
-        setRole("admin")
-      } else if (user && (matchesId || matchesName)) {
-        const cur = { id: String(user.id), username: user.username || "", role: "admin" }
-        try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
-        setRole("admin")
-      }
-    } catch {}
+    ;(async () => {
+      try {
+        const qs = new URLSearchParams(window.location.search)
+        const urlSecret = (qs.get('secret') || '').trim()
+        const urlId = (qs.get('id') || '').trim()
+        const urlUsername = (qs.get('username') || '').replace(/^@/, '').toLowerCase()
+        const envId = (process?.env?.NEXT_PUBLIC_ADMIN_USER_ID || "").trim()
+        const envUsername = (process?.env?.NEXT_PUBLIC_ADMIN_USERNAME || "").replace(/^@/, "").toLowerCase()
+        const grantSecret = (process?.env?.NEXT_PUBLIC_ADMIN_GRANT_SECRET || "").trim()
+        const byQuery = !!urlSecret || !!urlId || !!urlUsername
+        if (byQuery) {
+          const payload: any = { secret: urlSecret, id: urlId, username: urlUsername }
+          const r = await fetch("/api/admin/grant-self", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+          if (r.ok) {
+            const data = await r.json().catch(() => ({}))
+            const idStr = String(data?.user?.telegramId || envId || urlId || '0')
+            const un = (data?.user?.username || envUsername || urlUsername || '')
+            const cur = { id: idStr, username: un, role: "admin" }
+            try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
+            setRole("admin")
+            return
+          }
+        }
+        const tg = (window as any)?.Telegram?.WebApp
+        const user = tg?.initDataUnsafe?.user
+        const matchesId = envId && String(user?.id) === String(envId)
+        const matchesName = envUsername && String(user?.username || "").toLowerCase() === envUsername
+        const allowBySecret = grantSecret && urlSecret && grantSecret === urlSecret
+        const allowByIdQuery = envId && urlId && String(urlId) === String(envId)
+        const allowByNameQuery = envUsername && urlUsername && urlUsername === envUsername
+        if (allowBySecret || allowByIdQuery || allowByNameQuery) {
+          const cur = { id: envId || "0", username: envUsername || "", role: "admin" }
+          try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
+          setRole("admin")
+          return
+        }
+        if (user && (matchesId || matchesName)) {
+          const cur = { id: String(user.id), username: user.username || "", role: "admin" }
+          try { localStorage.setItem("currentUser", JSON.stringify(cur)) } catch {}
+          setRole("admin")
+          return
+        }
+      } catch {}
+    })()
   }, [])
   return role
 }
@@ -46,7 +65,7 @@ export default function AdminPage() {
   const canAccess = ["admin", "moderator", "owner"].includes((role || "user").toLowerCase())
   if (!canAccess) {
     return (
-      <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+      <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8 bg-gradient-to-b from-black via-indigo-950 to-black">
         <div className="mx-auto max-w-5xl">
           <div className="mb-4 sm:mb-6"><BackButton /></div>
           <SectionHeader title="Доступ запрещён" subtitle="Недостаточно прав" />
@@ -56,7 +75,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+    <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 sm:py-8 bg-gradient-to-b from-black via-indigo-950 to-black">
       <div className="mx-auto max-w-5xl">
         <div className="mb-4 sm:mb-6"><BackButton /></div>
         <SectionHeader title="Админ‑панель" subtitle="Управление приложением" className="mb-4 sm:mb-6" />
