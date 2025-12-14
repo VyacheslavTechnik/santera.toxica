@@ -61,7 +61,7 @@ export default function JournalPage() {
             <button
               key={t}
               onClick={() => setActive(t)}
-              className={`rounded-xl px-3 py-2 text-sm sm:text-base border ${active===t?"border-amber-400 bg-gradient-to-r from-amber-100 to-pink-100":"border-black/10 bg-white/80"}`}
+              className={`rounded-xl px-3 py-2 text-sm sm:text-base border ${active===t?"border-amber-400 bg-gradient-to-r from-amber-100 to-pink-100 text-black":"border-black/10 bg-white/80 text-black"}`}
               aria-label={tabMeta[t].label}
             >
               {tabMeta[t].emoji} {tabMeta[t].label}

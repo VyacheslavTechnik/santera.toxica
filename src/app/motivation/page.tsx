@@ -95,7 +95,7 @@ export default function MotivationPage() {
                 <button
                   key={v}
                   onClick={() => setEnergy(v)}
-                  className={`h-10 sm:h-12 rounded-xl border border-black/10 dark:border-white/20 flex items-center justify-center text-base ${energy===v?"bg-gradient-to-r from-amber-500 to-pink-500 text-white":"bg-white"}`}
+                  className={`h-10 sm:h-12 rounded-xl border border-black/10 dark:border-white/20 flex items-center justify-center text-base ${energy===v?"bg-gradient-to-r from-amber-500 to-pink-500 text-white":"bg-white text-black dark:text-black"}`}
                   aria-label={`Оценка энергии ${v}`}
                 >
                   {v}
